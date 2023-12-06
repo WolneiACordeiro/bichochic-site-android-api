@@ -41,7 +41,7 @@ O BichoChiq Petshop utiliza o MongoDB, um banco de dados não relacional. Caso n
 
 1. **Clone o Repositório:**
    ```bash
-   git clone https://github.com/WolneiACordeiro/bicho-chiq-petshop.git
+   git clone https://github.com/WolneiACordeiro/bichochic-site-android-api.git
    ## Executando a API no IntelliJ IDEA 🚀
 
 2. **Abra o Projeto no IntelliJ:**
