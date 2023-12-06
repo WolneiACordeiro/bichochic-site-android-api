@@ -1,14 +1,14 @@
 # BichoChiq Petshop 🐾
 
-Bem-vindo ao **BichoChiq Petshop**, o lugar onde a elegância encontra a praticidade no universo dos produtos para animais de estimação! 🌈 Este projeto foi carinhosamente desenvolvido, unindo um site encantador em **PHP, CSS e HTML**, um aplicativo mobile refinado em **Kotlin** e uma API REST robusta em **Spring Boot**. 🚀 Ambos, site e aplicativo, sincronizam-se perfeitamente com a API, proporcionando uma gestão eficiente e integrada do nosso catálogo exclusivo.
+Este projeto foi desenvolvido, unindo um site  em **PHP, CSS e HTML**, um aplicativo mobile em **Kotlin** e uma API REST em **Spring Boot**. 🚀 Ambos, site e aplicativo, sincronizam-se com a API, proporcionando uma gestão dos sistemas.
 
 ## Sistemas 🌍
 
-1. **Site (PHP, CSS, HTML):** Uma plataforma visualmente cativante para clientes e funcionários, focada no gerenciamento intuitivo do catálogo de produtos. 🛒
+1. **Site (PHP, CSS, HTML):** Uma plataforma para clientes e funcionários, focada no gerenciamento intuitivo do catálogo de produtos. 🛒
 
 2. **Aplicativo (Kotlin):** Desenvolvido para dispositivos móveis, o aplicativo oferece conveniência aos usuários, permitindo que explorem e comprem produtos de qualquer lugar. 📱
 
-3. **API REST (Spring Boot):** A espinha dorsal do sistema, fornece serviços para o site e o aplicativo, permitindo operações CRUD. Utiliza o **MongoDB** para armazenar e recuperar dados de produtos de maneira eficiente. 🔄
+3. **API REST (Spring Boot):** A espinha dorsal do sistema, fornece serviços para o aplicativo, permitindo operações CRUD. Utiliza o **MongoDB** para armazenar e recuperar dados de produtos de maneira eficiente. 🔄
 
 ## Tecnologias Utilizadas 🛠️
 
