@@ -2,7 +2,7 @@
 
 Bem-vindo ao **BichoChiq Petshop**, o lugar onde a elegância encontra a praticidade no universo dos produtos para animais de estimação! 🌈 Este projeto foi carinhosamente desenvolvido, unindo um site encantador em **PHP, CSS e HTML**, um aplicativo mobile refinado em **Kotlin** e uma API REST robusta em **Spring Boot**. 🚀 Ambos, site e aplicativo, sincronizam-se perfeitamente com a API, proporcionando uma gestão eficiente e integrada do nosso catálogo exclusivo.
 
-## Explore o Universo BichoChiq 🌍
+## Sistemas 🌍
 
 1. **Site (PHP, CSS, HTML):** Uma plataforma visualmente cativante para clientes e funcionários, focada no gerenciamento intuitivo do catálogo de produtos. 🛒
 
