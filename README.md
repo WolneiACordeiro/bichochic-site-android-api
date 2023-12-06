@@ -52,7 +52,7 @@ O BichoChiq Petshop utiliza o MongoDB, um banco de dados não relacional. Caso n
    - Certifique-se de que o MongoDB esteja em execução localmente ou ajuste as configurações no arquivo `application.properties`.
 
 4. **Execute a Aplicação:**
-   - Abra a classe principal (`PetshopApiApplication`) no IntelliJ.
+   - Abra a classe principal (`BichoChicApiApplication`) no IntelliJ.
    - Clique com o botão direito e escolha "Run" para iniciar a aplicação.
 
 A API estará disponível em [http://localhost:8080](http://localhost:8080).
