@@ -3,13 +3,18 @@ package com.example.eshopcommerce.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.OnClickListener
+import android.util.Log
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eshopcommerce.R
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eshopcommerce.Adapter.PopularListAdapter
 import com.example.eshopcommerce.Domain.PopularDomain
+import com.example.eshopcommerce.Entity.Produto
+import com.example.eshopcommerce.Service.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun bottom_navigation() {
         val homeBtn: LinearLayout = findViewById(R.id.homeBtn)
         val cartBtn: LinearLayout = findViewById(R.id.cartBtn)
+        val productsBtn: LinearLayout = findViewById(R.id.productsBtn)
 
         homeBtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, MainActivity::class.java))
@@ -33,16 +39,49 @@ class MainActivity : AppCompatActivity() {
         cartBtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, CartActivity::class.java))
         }
+
+        productsBtn.setOnClickListener {
+            startActivity(Intent(this@MainActivity, ProductListActivity::class.java))
+        }
     }
 
     private fun initRecyclerview() {
         val items = ArrayList<PopularDomain>()
-        items.add(PopularDomain("MacBook Pro 13 M2 Chip", "", "pic1", 15, 20.0, 4.0))
-        items.add(PopularDomain("NinjaBook Pro 13 M2 Chip", "", "pic2", 15, 20.0, 4.0))
-        items.add(PopularDomain("OpeBook Pro 13 M2 Chip", "", "pic3", 15, 20.0, 4.0))
-        recyclerViewPopular = findViewById(R.id.view1);
-        recyclerViewPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        adapterPopular = PopularListAdapter(items)
-        recyclerViewPopular.adapter = adapterPopular
+        val call = RetrofitService.produtoService.getProdutos()
+
+        recyclerViewPopular = findViewById(R.id.recyclerViewPopular)
+
+        call.enqueue(object : Callback<List<Produto>> {
+            override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
+                if (response.isSuccessful) {
+                    val produtos = response.body()
+                    produtos?.let {
+                        for (produto in it) {
+                            val popularItem = PopularDomain(
+                                produto.nome,
+                                produto.descricao,
+                                produto.imagem,
+                                20,
+                                20.00,
+                                produto.preco
+                            )
+                            items.add(popularItem)
+                        }
+                        adapterPopular = PopularListAdapter(items)
+
+                        recyclerViewPopular.adapter = adapterPopular
+                    }
+                } else {
+                    Log.e("API Response", "Erro na resposta da API: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Produto>>, t: Throwable) {
+                // Log de falha, se necessário
+                Log.e("API Failure", "Falha na chamada da API", t)
+            }
+        })
     }
+
+
 }

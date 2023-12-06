@@ -95,7 +95,7 @@ if (isset($_POST["cadastrar"])) {
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
         $nomeImagem = $_FILES['imagem']['name'];
         $extensao = pathinfo($nomeImagem, PATHINFO_EXTENSION);
-        $destino = 'images/' . $nomeImagem;
+        $destino = '../bichochic-android/app/src/main/assets/images/' . $nomeImagem;
 
         // Verifica se o arquivo é uma imagem válida
         $extensoesPermitidas = array('jpg', 'jpeg', 'png', 'gif');

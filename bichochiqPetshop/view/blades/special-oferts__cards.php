@@ -25,7 +25,7 @@ include("../controller/crudProdutos.php");
                 ?>
                             <div class="product-card">
                                 <div iv class="card">
-                                    <img src="images/<?php echo $produto->imagem; ?>" class="img-produto" alt="">
+                                    <img src="../../bichochic-android/app/src/main/assets/images/<?php echo $produto->imagem; ?>" class="img-produto" alt="">
                                     <div class="sobre-card">
                                         <div class="info-card">
                                             <div class="sobre-produto"> 

@@ -2,9 +2,9 @@ package com.github.wolneiacordeiro.bichochicapi.controller;
 
 import com.github.wolneiacordeiro.bichochicapi.Repository.ProdutoRepository;
 import com.github.wolneiacordeiro.bichochicapi.entity.Produto;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,48 +55,53 @@ public class ProdutoController {
         produto.setCategoria(categoria);
 
         if (imagem != null && !imagem.isEmpty()) {
-            String nomeArquivo = UUID.randomUUID().toString() + "_" + StringUtils.cleanPath(imagem.getOriginalFilename());
-
-            String uploadDir = "./images/";
+            String nomeArquivo = adicionarCaractereAleatorio(imagem.getOriginalFilename());
+            String uploadDir = ".././bichochic-android/app/src/main/assets/images/";
             Path uploadPath = Paths.get(uploadDir);
-
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
-
             try (InputStream inputStream = imagem.getInputStream()) {
                 Path filePath = uploadPath.resolve(nomeArquivo);
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
-
             produto.setImagem(nomeArquivo);
         }
-
         return produtoRepository.save(produto);
     }
 
     @PutMapping("/{id}")
-    public Produto updateProduto(@PathVariable String id, @RequestParam("imagem") MultipartFile imagem, @ModelAttribute Produto produto) throws IOException {
+    public Produto updateProduto(
+            @PathVariable String id,
+            @RequestParam("nome") String nome,
+            @RequestParam("preco") double preco,
+            @RequestParam("descricao") String descricao,
+            @RequestParam("tamanho") String tamanho,
+            @RequestParam("quantidade") int quantidade,
+            @RequestParam("especie") String especie,
+            @RequestParam("categoria") String categoria,
+            @RequestParam(value = "imagem", required = false) MultipartFile imagem) throws IOException {
+
         Produto existingProduto = produtoRepository.findById(id).orElse(null);
+
         if (existingProduto != null) {
-            existingProduto.setNome(produto.getNome());
-            existingProduto.setPreco(produto.getPreco());
-            existingProduto.setDescricao(produto.getDescricao());
-            existingProduto.setTamanho(produto.getTamanho());
-            existingProduto.setQuantidade(produto.getQuantidade());
-            existingProduto.setEspecie(produto.getEspecie());
-            existingProduto.setCategoria(produto.getCategoria());
+            existingProduto.setNome(nome);
+            existingProduto.setPreco(preco);
+            existingProduto.setDescricao(descricao);
+            existingProduto.setTamanho(tamanho);
+            existingProduto.setQuantidade(quantidade);
+            existingProduto.setEspecie(especie);
+            existingProduto.setCategoria(categoria);
 
             if (imagem != null && !imagem.isEmpty()) {
-
                 if (existingProduto.getImagem() != null) {
-                    Path oldFilePath = Paths.get("./images/", existingProduto.getImagem());
+                    Path oldFilePath = Paths.get(".././bichochic-android/app/src/main/assets/images/", existingProduto.getImagem());
                     Files.deleteIfExists(oldFilePath);
                 }
 
-                String nomeArquivo = UUID.randomUUID().toString() + "_" + StringUtils.cleanPath(imagem.getOriginalFilename());
+                String nomeArquivo = adicionarCaractereAleatorio(imagem.getOriginalFilename());
                 try (InputStream inputStream = imagem.getInputStream()) {
-                    Path filePath = Paths.get("./images/", nomeArquivo);
+                    Path filePath = Paths.get(".././bichochic-android/app/src/main/assets/images/", nomeArquivo);
                     Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
                 }
 
@@ -109,24 +114,30 @@ public class ProdutoController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduto(@PathVariable String id) {
         Produto existingProduto = produtoRepository.findById(id).orElse(null);
         if (existingProduto != null) {
             produtoRepository.deleteById(id);
-
             if (existingProduto.getImagem() != null) {
-                Path filePath = Paths.get("./images/", existingProduto.getImagem());
+                Path filePath = Paths.get(".././bichochic-android/app/src/main/assets/images/", existingProduto.getImagem());
                 try {
                     Files.deleteIfExists(filePath);
                 } catch (IOException e) {
                 }
             }
-
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private String adicionarCaractereAleatorio(String originalFilename) {
+        String uuidPart = UUID.randomUUID().toString();
+        String restanteDoNome = originalFilename.substring(originalFilename.indexOf("_") + 1);
+        String caractereAleatorio = RandomStringUtils.randomAlphabetic(1);
+        return caractereAleatorio + uuidPart + restanteDoNome;
     }
 }
 
